@@ -1,0 +1,60 @@
+@labelFontSize: 17px;
+@top: -2px;
+@positionbtn: 100px;
+
+.label-switch {
+  position: relative;
+  top: @top;
+  font-size: @labelFontSize;
+  padding: 0px 10px;
+  font-family: sans-serif;
+}
+.main-screen-home {
+  font-size: 30px;
+  background-color: rgb(38, 50, 56);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  height: 100px;
+}
+.img-div {
+  height: 100px;
+  width: 200px;
+  padding: 20px;
+}
+.img-header {
+  width: 100%;
+  height: 100%;
+}
+
+@media only screen and (max-width: 800px) {
+  @positionbtn: 0px;
+  .main-screen-home {
+    font-size: 20px;
+  }
+  .margin-switch {
+    right: @positionbtn;
+  }
+  .img-div {
+    height: 100px;
+    width: 200px;
+  }
+}
+
+@media only screen and (max-width: 1024px) and (min-width: 500px) {
+  .label-switch {
+    display: none;
+  }
+  h1 {
+    font-size: 20px;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .label-header {
+    display: none;
+  }
+  .label-switch {
+    display: none;
+  }
+}
