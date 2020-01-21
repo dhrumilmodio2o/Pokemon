@@ -9,8 +9,11 @@ const Pokemon = props => {
   // console.log(props.res.moves[0].move.url);
   return <PokemonInformation item={res} moves={moves} />;
 };
-Pokemon.getInitialProps = async function({ query }) {
-  var res = await fetch(query.url)
+
+Pokemon.getInitialProps = async function ({ query }) {
+  const { id } = query;
+  const path = "https://pokeapi.co/api/v2/pokemon/" + id;
+  var res = await fetch(path)
     .then(res => res.json())
     .then(res => res);
   var moves = [];

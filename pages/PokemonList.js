@@ -4,7 +4,7 @@ import { List, Avatar } from "antd";
 import PokemonCard from "./../components/Cards/PokemonCard/PokemonCard";
 import Header from "../components/Header/Header";
 import "../style.less";
-import Link from "next/link";
+import { idGeneratorPokemon } from '../common/util'
 const PokemonList = props => {
   const { data, isChecked } = props;
   const [isCheked1, setIsChecked] = useState(isChecked);
@@ -15,7 +15,7 @@ const PokemonList = props => {
       setIsChecked(false);
     }
   };
-
+  const dataItems = idGeneratorPokemon(data)
   return (
     <div>
       <Header onChange={onChange} isChecked={isChecked} />
@@ -31,55 +31,49 @@ const PokemonList = props => {
               xl: 6,
               xxl: 5
             }}
-            dataSource={data}
+            dataSource={dataItems}
             renderItem={item => (
               <List.Item>
-                <PokemonCard item={item.pokemon} />
+                <PokemonCard item={item} />
               </List.Item>
             )}
           />
         ) : (
-          <List
-            itemLayout="horizontal"
-            dataSource={data}
-            renderItem={item => (
-              <List.Item>
-                <Link
-                  href={
-                    "/Pokemon?url=" +
-                    item.pokemon.url +
-                    "&isChecked=" +
-                    isCheked1
-                  }
-                >
-                  <div className="item-list">
-                    <List.Item.Meta
-                      avatar={
-                        <Avatar src="https://purepng.com/public/uploads/medium/purepng.com-pokeballpokeballdevicepokemon-ballpokemon-capture-ball-17015278258617dhmi.png" />
-                      }
-                      title={item.pokemon.name.toUpperCase()}
-                    />
-                  </div>
-                </Link>
-              </List.Item>
-            )}
-          />
-        )}
+            <List
+              itemLayout="horizontal"
+              dataSource={dataItems}
+              renderItem={item => (
+                <List.Item>
+                  <a
+                    href={`/Pokemon/${item.id}?isChecked=${isCheked1}`}
+                  >
+                    <div className="item-list">
+                      <List.Item.Meta
+                        avatar={
+                          <Avatar src="https://purepng.com/public/uploads/medium/purepng.com-pokeballpokeballdevicepokemon-ballpokemon-capture-ball-17015278258617dhmi.png" />
+                        }
+                        title={item.pokemon.name.toUpperCase()}
+                      />
+                    </div>
+                  </a>
+                </List.Item>
+              )}
+            />
+          )}
       </div>
-    </div>
+    </div >
   );
 };
 
-PokemonList.getInitialProps = async function({ query }) {
-  const { url, isChecked } = query;
-  var data;
-  const res = await fetch(url)
+PokemonList.getInitialProps = async function ({ query }) {
+  const { id, isChecked = '' } = query;
+  console.log(query);
+  var path = "https://pokeapi.co/api/v2/type/" + id
+  const res = await fetch(path)
     .then(value => value.json())
     .then(value => value.pokemon);
 
-  // for (var i = 0; i < res.moves.length; i++) {
-  //   console.log(res.moves[i]);
-  // }
+
 
   return { data: res, isChecked: isChecked };
 };

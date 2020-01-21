@@ -1,20 +1,14 @@
 import React from "react";
 import { Card } from "antd";
 import Link from "next/link";
-const Pokemoncard = props => {
-  const { item } = props;
-  var url = "/Pokemon?url=" + item.url;
-  // const poke1 = await fetch(item.url)
-  //   .then(value => value.json())
-  //   .then(value => {
-  //     return { src: value.sprites.front_default };
-  //   });
+const Pokemoncard = ({ item }) => {
 
+  const { pokemon, id } = item;
   return (
-    <Link href={url}>
+    <a href={`/Pokemon/${id}`}>
       <div className="shadow">
         <Card
-          title={item.name.toUpperCase()}
+          title={pokemon.name.toUpperCase()}
           style={{
             border: 0,
             borderRadius: "15px",
@@ -30,10 +24,10 @@ const Pokemoncard = props => {
           bodyStyle={{ backgroundColor: "rgb(38,50,56)", fontWeight: "bolder" }}
         >
           {/* {poke11src && <img className="pokeball" src={poke1.src} />} */}
-          {item.name.toUpperCase()}
+          {pokemon.name.toUpperCase()}
         </Card>
       </div>
-    </Link>
+    </a >
   );
 };
 export default Pokemoncard;
